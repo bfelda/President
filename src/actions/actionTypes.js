@@ -1,0 +1,4 @@
+export default {
+	USER_ENTERED: "USER_ENTERED",
+	USER_LOADED: "USER_LOADED",
+};
