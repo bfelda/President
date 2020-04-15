@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
+import * as userApi from "../apis/userApi";
+import * as gameApi from "../apis/gameApi";
 
 function UserDetails(props) {
 	const green = "green-600";
 	const [user, setUser] = useState({
-		username: "",
+		id: "",
+		deck: [],
 	});
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		localStorage.setItem("username", user.username);
-		localStorage.setItem("deck", JSON.stringify([1, 2, 3, 4, 5, 6]));
-		window.location.reload();
+		userApi.createUser(user.id);
 	}
 
 	function handleChange({ target }) {
@@ -41,7 +42,7 @@ function UserDetails(props) {
 					className={`bg-${green} py-2 cursor-pointer px-16 text-xl bold text-white mt-6 shadow-md disabled:bg-green-300`}
 					type="submit"
 					value="Enter"
-					disabled={user.username == ""}
+					disabled={user.id == ""}
 					id="user-submit"
 				/>
 			</form>
