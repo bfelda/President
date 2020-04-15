@@ -52,6 +52,8 @@ export function createUser(id) {
 		.collection("userList")
 		.doc(id)
 		.set({
+			winOrder: 0,
+			created: Date.now(),
 			wins: 0,
 			deck: [],
 		})
