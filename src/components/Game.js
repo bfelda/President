@@ -19,6 +19,8 @@ export default function Game(props) {
 						{user.id}: {user.deck.length} cards
 					</div>
 				))}
+			</div>
+			<div>
 				{props.game.activeDeck.map((card) => (
 					<div
 						key={card.index}

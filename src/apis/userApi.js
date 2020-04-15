@@ -14,10 +14,17 @@ export function resetUser(user) {
 	});
 }
 
-export function nextUser(users, me) {
-	let myIndex = users.findIndex((i) => i.id === me.id);
-	let nextIndex = myIndex === users.length - 1 ? 0 : (myIndex += 1);
-	let nextUser = users[nextIndex];
+export function nextUser(users, me, game) {
+	let allUsers = [...users, me];
+	let orderedUserList = allUsers.sort((a, b) => a.winOrder - b.winOrder);
+	let myIndex = orderedUserList.findIndex((i) => i.id === me.id);
+	let nextIndex;
+	if (game.clockwise) {
+		nextIndex = myIndex === orderedUserList.length - 1 ? 0 : (myIndex += 1);
+	} else {
+		nextIndex = myIndex === 0 ? orderedUserList.length - 1 : (myIndex -= 1);
+	}
+	let nextUser = orderedUserList[nextIndex];
 
 	firebase.firestore().collection("userList").doc(nextUser.id).update({
 		myTurn: true,
@@ -55,25 +62,4 @@ export function createUser(id) {
 		.catch((error) => {
 			debugger;
 		});
-}
-
-export function getMe() {
-	//get username from storage
-	let username = localStorage.getItem("username");
-	if (username) {
-		//if the usename exists, get the firebase doc
-		var docRef = firebase.firestore().collection("userList").doc(username);
-		docRef.get().then((doc) => {
-			//if the firebase doc exists, return the user
-			if (doc) {
-				return createUserFromRef(doc);
-			}
-			//if the firebase doc doesn't exist, delete the storage
-			else {
-				localStorage.removeItem("username");
-			}
-		});
-	}
-	//return null if the user isn't in firebase
-	return {};
 }

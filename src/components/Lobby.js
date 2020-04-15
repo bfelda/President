@@ -1,5 +1,4 @@
 import React from "react";
-import * as userApi from "../apis/userApi";
 import * as gameApi from "../apis/gameApi";
 
 export default function Lobby(props) {
@@ -7,7 +6,7 @@ export default function Lobby(props) {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		gameApi.startGame(props.users);
+		gameApi.startGame([...props.users, props.me]);
 	}
 
 	return (
@@ -24,6 +23,9 @@ export default function Lobby(props) {
 					</h1>
 				</div>
 				<div className="lobby-list">
+					<div className="bg-white my-2 p-3 shadow">
+						{props.me.id}
+					</div>
 					{props.users.map((user) => (
 						<div className="bg-white my-2 p-3 shadow" key={user.id}>
 							{user.id}
@@ -35,10 +37,6 @@ export default function Lobby(props) {
 						className={`bg-${green} py-2 cursor-pointer px-16 text-xl bold text-white mt-6 shadow disabled:shadow-none disabled:opacity-50`}
 						type="submit"
 						value="Start Game"
-						disabled={
-							props.users.length < 3 ||
-							props.users[0].id !== props.me.id
-						}
 						id="user-submit"
 					/>
 				)}

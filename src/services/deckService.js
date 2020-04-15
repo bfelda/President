@@ -35,7 +35,6 @@ export function dealCardsToUsers(users, shuffledDeck) {
 
 export function shuffleDeck(deckArr) {
 	return new Promise((resolve, reject) => {
-		let iteration = 1;
 		//shuffle the deck
 		for (let i = deckArr.length - 1; i > 0; i--) {
 			let j = Math.floor(Math.random() * (i + 1));
@@ -55,7 +54,7 @@ export function getFullDeck() {
 		while (current_suit_index < 4) {
 			numbers.map((number, index) => {
 				let card = {
-					class: `${numbers[index]}_${suits[current_suit_index]}`,
+					class: `${number}_${suits[current_suit_index]}`,
 					number: index + 2,
 					suite: suits[current_suit_index],
 					index: (current_suit_index + 1) * numbers.length + index,

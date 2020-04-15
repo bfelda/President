@@ -11,13 +11,15 @@ export default function MyArea(props) {
 	}
 
 	function onClick(card, selected) {
-		if (selected) {
-			setSelectedCards([...selectedCards, card]);
-		} else {
-			let newDeck = selectedCards.filter((a) => {
-				return a.class != card.class;
-			});
-			setSelectedCards(newDeck);
+		if (props.me.myTurn) {
+			if (selected) {
+				setSelectedCards([...selectedCards, card]);
+			} else {
+				let newDeck = selectedCards.filter((a) => {
+					return a.class != card.class;
+				});
+				setSelectedCards(newDeck);
+			}
 		}
 	}
 
@@ -28,7 +30,8 @@ export default function MyArea(props) {
 	function go() {
 		gameApi.addCardsToGame(props.game, selectedCards, props.me);
 		userApi.removeCardsFromDeck(selectedCards, props.me);
-		userApi.nextUser(props.users, props.me);
+		userApi.nextUser(props.users, props.me, props.game);
+		setSelectedCards([]);
 	}
 
 	function clear() {
@@ -37,7 +40,8 @@ export default function MyArea(props) {
 
 	function resetGame() {
 		gameApi.resetGame();
-		props.users.map((user) => {
+		let allUsers = [...props.users, props.me];
+		allUsers.map((user) => {
 			userApi.resetUser(user);
 		});
 	}
@@ -45,8 +49,11 @@ export default function MyArea(props) {
 	setupDeck();
 
 	return (
-		<div className="absolute bottom-0 w-full bg-orange-200 p-5">
-			<div className="flex flex-row ">
+		<div className="absolute bottom-0 w-full bg-orange-200">
+			{!props.me.myTurn && (
+				<div className="absolute w-full h-full z-10 bg-white opacity-50"></div>
+			)}
+			<div className="flex flex-row p-5">
 				<h1 className="text-green-600 text-2xl font-bold">
 					{props.me.id}
 				</h1>
@@ -71,7 +78,7 @@ export default function MyArea(props) {
 				</button>
 				<span>{props.me.myTurn ? "Your Turn!" : ""}</span>
 			</div>
-			<div className="mt-2">
+			<div className="mt-2 p-2">
 				{props.me.deck.map((card) => (
 					<Card onClick={onClick} key={card.index} card={card} />
 				))}

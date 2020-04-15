@@ -4,11 +4,23 @@ import UserDetails from "./components/UserDetails";
 import Lobby from "./components/Lobby";
 import Game from "./components/Game";
 import MyArea from "./components/MyArea";
-import * as gameApi from "./apis/gameApi";
-import * as userApi from "./apis/userApi";
 import "./App.css";
 
 function App() {
+	//get username from storage
+	const username = localStorage.getItem("username");
+	if (username) {
+		//if the usename exists, get the firebase doc
+		var docRef = firebase.firestore().collection("userList").doc(username);
+		docRef.get().then((doc) => {
+			//if the firebase doc doesn't exist, delete the storage
+			if (!doc.exists) {
+				localStorage.removeItem("username");
+				window.location.reload();
+			}
+		});
+	}
+
 	//list of users
 	const [users, setUsers] = useState([]);
 
@@ -21,30 +33,9 @@ function App() {
 
 	//local user that is in storage
 	const [me, setMe] = useState({
-		id: null,
+		id: username,
 		deck: [],
 	});
-
-	//All About Local User
-	//get username from storage
-	let username = localStorage.getItem("username");
-	if (username) {
-		//if the usename exists, get the firebase doc
-		var docRef = firebase.firestore().collection("userList").doc(username);
-		docRef.get().then((doc) => {
-			//if the firebase doc exists, return the user
-			if (doc.exists) {
-				setMe({
-					id: doc.id,
-					...doc.data(),
-				});
-			}
-			//if the firebase doc doesn't exist, delete the storage
-			else {
-				localStorage.removeItem("username");
-			}
-		});
-	}
 
 	//All about game data
 	useEffect(() => {
@@ -67,16 +58,15 @@ function App() {
 			.firestore()
 			.collection("userList")
 			.onSnapshot((snapshot) => {
-				const users = snapshot.docs.map((doc) => ({
+				const storeUsers = snapshot.docs.map((doc) => ({
 					id: doc.id,
 					...doc.data(),
 				}));
-				if (me.id !== null) {
-					debugger;
-					setUsers(users.filter((u) => u.id !== me.id));
-					setMe(users.filter((u) => u.id === me.id));
+				if (username) {
+					setUsers(storeUsers.filter((u) => u.id !== username));
+					setMe(storeUsers.filter((u) => u.id === username)[0]);
 				} else {
-					setUsers(users.filter((u) => u.id !== me.id));
+					setUsers(storeUsers);
 				}
 			});
 		return () => unsubscribe();
@@ -86,14 +76,16 @@ function App() {
 		<div className="App">
 			{me.id ? (
 				game.running ? (
-					<Game game={game} users={users} />
+					<>
+						<Game game={game} users={users} />
+						<MyArea me={me} users={users} game={game} />
+					</>
 				) : (
 					<Lobby users={users} me={me} game={game} />
 				)
 			) : (
 				<UserDetails />
 			)}
-			<MyArea me={me} users={users} game={game} />
 		</div>
 	);
 }
