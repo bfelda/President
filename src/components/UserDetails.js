@@ -33,7 +33,7 @@ function UserDetails(props) {
 					<input
 						className={`w-full border-4 border-${green} p-2 text-xl`}
 						type="text"
-						name="username"
+						name="id"
 						onChange={handleChange}
 						id="user-input"
 					/>
