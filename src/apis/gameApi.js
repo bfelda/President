@@ -52,16 +52,19 @@ export function clearGameField(game) {
 	});
 }
 
-export function addCardsToGame(game, newCards, user) {
-	let reverse = newCards[0].number === 4;
-	firebase
+export function addCardsToGame(game, newCards, reverse) {
+	let turn = {
+		cards: newCards,
+	};
+	return firebase
 		.firestore()
 		.collection("gameList")
 		.doc(gameId)
 		.update({
-			activeDeck: [...game.activeDeck, ...newCards],
+			activeDeck: [...game.activeDeck, turn],
 			clockwise: reverse ? !game.clockwise : game.clockwise,
 		});
+	//add code to go to the next user here
 }
 
 export function getGame() {

@@ -47,7 +47,6 @@ export function removeCardsFromDeck(cards, user) {
 }
 
 export function createUser(id) {
-	console.log(id);
 	firebase
 		.firestore()
 		.collection("userList")

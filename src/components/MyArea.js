@@ -28,10 +28,12 @@ export default function MyArea(props) {
 	}
 
 	function go() {
-		gameApi.addCardsToGame(props.game, selectedCards, props.me);
+		let reverse = selectedCards[0] === 4;
 		userApi.removeCardsFromDeck(selectedCards, props.me);
-		userApi.nextUser(props.users, props.me, props.game);
-		setSelectedCards([]);
+		gameApi.addCardsToGame(props.game, selectedCards, reverse).then(() => {
+			userApi.nextUser(props.users, props.me, props.game);
+			setSelectedCards([]);
+		});
 	}
 
 	function clear() {
@@ -49,7 +51,7 @@ export default function MyArea(props) {
 	setupDeck();
 
 	return (
-		<div className="absolute bottom-0 w-full bg-orange-200">
+		<div className="w-full bg-orange-200">
 			{!props.me.myTurn && (
 				<div className="absolute w-full h-full z-10 bg-white opacity-50"></div>
 			)}

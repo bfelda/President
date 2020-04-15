@@ -599,6 +599,10 @@ html {
   display: inline-block;
 }
 
+.turn > .card:nth-child(2) {
+  margin-left: -50px;
+}
+
 .ace_clubs {
   width: 71px;
   height: 97px;
