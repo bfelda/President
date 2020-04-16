@@ -22,7 +22,10 @@ export default function Game(props) {
 			</div>
 			<div className="flex items-center justify-center h-full">
 				{props.game.activeDeck.map((turn, index) => (
-					<div key={index} className="p-2 turn">
+					<div
+						key={index}
+						className="p-2 turn flex flex-row flex-wrap"
+					>
 						{turn.cards &&
 							turn.cards.map((card) => (
 								<div

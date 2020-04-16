@@ -24,6 +24,14 @@ html {
 	margin-left: -50px;
 }
 
+.turn > .card:nth-child(3) {
+	margin-left: -50px;
+}
+
+.turn > .card:nth-child(4) {
+	margin-left: -50px;
+}
+
 .ace_clubs {
 	width: 71px;
 	height: 97px;

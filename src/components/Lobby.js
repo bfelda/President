@@ -32,7 +32,7 @@ export default function Lobby(props) {
 						</div>
 					))}
 				</div>
-				{props.users.length > 1 && (
+				{[...props.users, props.me].length > 1 && (
 					<input
 						className={`bg-${green} py-2 cursor-pointer px-16 text-xl bold text-white mt-6 shadow disabled:shadow-none disabled:opacity-50`}
 						type="submit"

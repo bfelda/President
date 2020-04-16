@@ -27,11 +27,33 @@ export default function MyArea(props) {
 		return deck.sort((a, b) => a.number - b.number);
 	}
 
+	function skippedCheck(deck, thrown) {
+		let topNumbersOfDeck = deck[deck.length - 1].cards.map((c) => c.number);
+
+		let currentNumbersThrown = thrown.map((c) => c.number);
+
+		return (
+			JSON.stringify(currentNumbersThrown) ==
+			JSON.stringify(topNumbersOfDeck)
+		);
+	}
+
 	function go() {
-		let reverse = selectedCards[0] === 4;
-		userApi.removeCardsFromDeck(selectedCards, props.me);
+		let skipped = false;
+		let reverse = selectedCards[0].number === 4;
+		let clear = selectedCards[0].number === 2;
+		if (props.game.activeDeck.length > 0 && !reverse) {
+			skipped = skippedCheck(props.game.activeDeck, selectedCards);
+		}
+		console.log("cleared: ", clear);
+		userApi.removeCardsFromDeck(selectedCards, props.me, clear);
 		gameApi.addCardsToGame(props.game, selectedCards, reverse).then(() => {
-			userApi.nextUser(props.users, props.me, props.game);
+			if (!clear) {
+				let clockwise = reverse
+					? !props.game.clockwise
+					: props.game.clockwise;
+				userApi.nextUser(props.users, props.me, clockwise, skipped);
+			}
 			setSelectedCards([]);
 		});
 	}
@@ -51,7 +73,7 @@ export default function MyArea(props) {
 	setupDeck();
 
 	return (
-		<div className="w-full bg-orange-200">
+		<div className="w-full bg-orange-200 relative">
 			{!props.me.myTurn && (
 				<div className="absolute w-full h-full z-10 bg-white opacity-50"></div>
 			)}

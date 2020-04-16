@@ -4,21 +4,28 @@ import * as deckApi from "../services/deckService";
 const gameId = "jfZbXjCYykHsLuZxgjZ3";
 
 export function startGame(users) {
-	if (users[0].winOrder === 0) {
-		users.sort((a, b) => a.created - b.created);
-		users.map((user, index) => {
-			user.winOrder = index + 1;
-		});
-	} else {
-		users.sort((a, b) => a.winOrder - b.winOrder);
+	let newUsers = users
+		.filter((user) => user.winOrder === 0)
+		.sort((a, b) => a.created - b.created);
+
+	let existingUsers = users.filter((user) => user.winOrder !== 0);
+
+	if (newUsers.length > 0) {
+		newUsers.map(
+			(user, index) =>
+				(user.winOrder = existingUsers.length + (index + 1))
+		);
 	}
+	let allUsers = [...existingUsers, ...newUsers].sort(
+		(a, b) => a.winOrder - b.winOrder
+	);
 	firebase.firestore().collection("gameList").doc(gameId).update({
 		running: true,
 	});
 	deckApi.getFullDeck().then((deck) => {
 		deckApi.shuffleDeck(deck).then((shuffledDeck) => {
 			deckApi
-				.dealCardsToUsers(users, shuffledDeck)
+				.dealCardsToUsers(allUsers, shuffledDeck)
 				.then((usersWithCards) => {
 					usersWithCards.map((userWithCards, index) => {
 						firebase
@@ -29,6 +36,7 @@ export function startGame(users) {
 								deck: userWithCards.deck,
 								myTurn: index === 0 ? true : false,
 								winOrder: userWithCards.winOrder,
+								observer: false,
 							});
 					});
 				});
