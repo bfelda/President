@@ -86,7 +86,7 @@ export default function MyArea(props) {
 				<div className="absolute w-full h-full z-10 bg-white opacity-50"></div>
 			)}
 			<div className="flex flex-row justify-between p-5">
-				<div class="flex">
+				<div className="flex">
 					<div>
 						<h1 className="text-green-600 text-2xl font-bold">
 							{props.me.id}

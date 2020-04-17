@@ -83,6 +83,13 @@ function App() {
 				) : (
 					<Lobby users={users} me={me} game={game} />
 				)
+			) : game.running ? (
+				<div className="flex h-screen items-center justify-center text-3xl text-white">
+					<div className="mx-20 text-center">
+						There's a game in play, when it's done you'll be able to
+						join
+					</div>
+				</div>
 			) : (
 				<UserDetails />
 			)}
