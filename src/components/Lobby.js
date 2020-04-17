@@ -1,5 +1,6 @@
 import React from "react";
 import * as gameApi from "../apis/gameApi";
+import * as userApi from "../apis/userApi";
 
 export default function Lobby(props) {
 	const green = "green-600";
@@ -7,6 +8,12 @@ export default function Lobby(props) {
 	function handleSubmit(event) {
 		event.preventDefault();
 		gameApi.startGame([...props.users, props.me]);
+	}
+
+	function removeUser(id) {
+		userApi.removeUser(id).then((response) => {
+			console.log(response);
+		});
 	}
 
 	return (
@@ -23,12 +30,25 @@ export default function Lobby(props) {
 					</h1>
 				</div>
 				<div className="lobby-list">
-					<div className="bg-white my-2 p-3 shadow">
-						{props.me.id}
+					<div className="flex">
+						<div className="bg-white my-2 p-3 shadow flex-grow">
+							{props.me.id}
+						</div>
+						<div
+							onClick={() => removeUser(props.me.id)}
+							className="bg-red-500 my-2 p-3 shadow text-white cursor-pointer"
+						>
+							Leave
+						</div>
 					</div>
 					{props.users.map((user) => (
-						<div className="bg-white my-2 p-3 shadow" key={user.id}>
-							{user.id}
+						<div className="flex">
+							<div
+								className="bg-white my-2 p-3 shadow flex-grow"
+								key={user.id}
+							>
+								{user.id}
+							</div>
 						</div>
 					))}
 				</div>

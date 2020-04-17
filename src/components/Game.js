@@ -21,7 +21,9 @@ export default function Game(props) {
 						className={`${
 							user.observer ? "bg-white" : "bg-orange-200"
 						} shadow rounded-b-lg p-3 shadow ${
-							user.myTurn ? "text-xl font-bold shadow-md" : ""
+							user.myTurn
+								? "font-bold shadow-md border-b-4 border-l-4 border-r-4 border-green-500"
+								: ""
 						}`}
 						key={user.id}
 					>

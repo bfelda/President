@@ -607,6 +607,28 @@ html {
   margin-left: -30px;
 }
 
+.menu-icon {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  text-indent: -999px;
+}
+
+.border-icon {
+  height: 25px;
+  border-top: 5px solid #33754d;
+  border-bottom: 5px solid #33754d;
+}
+
+.border-icon:before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width: 100%;
+  border-top: 5px solid #33754d;
+}
+
 .ace_clubs {
   width: 71px;
   height: 97px;

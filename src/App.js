@@ -4,6 +4,7 @@ import UserDetails from "./components/UserDetails";
 import Lobby from "./components/Lobby";
 import Game from "./components/Game";
 import MyArea from "./components/MyArea";
+import Menu from "./components/Menu";
 import "./App.css";
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
 			{me.id ? (
 				game.running ? (
 					<div className="flex flex-col justify-between h-screen">
+						<Menu users={users} game={game} me={me} />
 						<Game game={game} users={users} me={me} />
 						<MyArea me={me} users={users} game={game} />
 					</div>

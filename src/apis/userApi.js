@@ -1,7 +1,9 @@
 import firebase from "../services/firebase";
 
+const repo = "userList";
+
 export function resetUser(user) {
-	firebase.firestore().collection("userList").doc(user.id).update({
+	firebase.firestore().collection(repo).doc(user.id).update({
 		deck: [],
 		myTurn: false,
 		observer: true,
@@ -34,14 +36,14 @@ function nextCounterClockwiseUser(users, currentUser) {
 
 export function pass(users, me, clockwise) {
 	nextUser(users, me, clockwise, false);
-	firebase.firestore().collection("userList").doc(me.id).update({
+	firebase.firestore().collection(repo).doc(me.id).update({
 		myTurn: false,
 	});
 }
 
 export function endGame(order, lastUser) {
 	debugger;
-	firebase.firestore().collection("userList").doc(lastUser.id).update({
+	firebase.firestore().collection(repo).doc(lastUser.id).update({
 		myTurn: false,
 		observer: true,
 		winOrder: order,
@@ -59,7 +61,7 @@ export function nextUser(users, me, clockwise, skipped, complete) {
 			: nextCounterClockwiseUser;
 		let nextUser = nextUserFn(allUsers, me);
 		if (skipped) nextUser = nextUserFn(allUsers, nextUser);
-		firebase.firestore().collection("userList").doc(nextUser.id).update({
+		firebase.firestore().collection(repo).doc(nextUser.id).update({
 			myTurn: true,
 		});
 	}
@@ -81,7 +83,7 @@ export function removeCardsFromDeck(cards, user, clear, complete, users) {
 		if (index === cards.length - 1) {
 			return firebase
 				.firestore()
-				.collection("userList")
+				.collection(repo)
 				.doc(user.id)
 				.update({
 					deck: user.deck,
@@ -96,7 +98,7 @@ export function removeCardsFromDeck(cards, user, clear, complete, users) {
 export function createUser(id) {
 	firebase
 		.firestore()
-		.collection("userList")
+		.collection(repo)
 		.doc(id)
 		.set({
 			winOrder: 0,
@@ -112,4 +114,8 @@ export function createUser(id) {
 		.catch((error) => {
 			console.log(error);
 		});
+}
+
+export function removeUser(id) {
+	return firebase.firestore().collection(repo).doc(id).delete();
 }
