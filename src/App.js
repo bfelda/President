@@ -77,7 +77,7 @@ function App() {
 			{me.id ? (
 				game.running ? (
 					<div className="flex flex-col justify-between h-screen">
-						<Game game={game} users={users} />
+						<Game game={game} users={users} me={me} />
 						<MyArea me={me} users={users} game={game} />
 					</div>
 				) : (

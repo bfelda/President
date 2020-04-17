@@ -4,6 +4,7 @@ export function resetUser(user) {
 	firebase.firestore().collection("userList").doc(user.id).update({
 		deck: [],
 		myTurn: false,
+		observer: true,
 	});
 }
 
@@ -31,34 +32,62 @@ function nextCounterClockwiseUser(users, currentUser) {
 	return users[nextUserIndex];
 }
 
-export function nextUser(users, me, clockwise, skipped) {
-	console.log("skipped: ", skipped);
-	console.log("clockwise: ", clockwise);
-
-	let allUsers = [...users, me];
-	let nextUserFn = clockwise ? nextClockwiseUser : nextCounterClockwiseUser;
-	let nextUser = nextUserFn(allUsers, me);
-	if (skipped) nextUser = nextUserFn(allUsers, nextUser);
-	console.log(me.id, nextUser.id);
-	firebase.firestore().collection("userList").doc(nextUser.id).update({
-		myTurn: true,
+export function pass(users, me, clockwise) {
+	nextUser(users, me, clockwise, false);
+	firebase.firestore().collection("userList").doc(me.id).update({
+		myTurn: false,
 	});
 }
 
-export function removeCardsFromDeck(cards, user, clear) {
+export function endGame(order, lastUser) {
+	debugger;
+	firebase.firestore().collection("userList").doc(lastUser.id).update({
+		myTurn: false,
+		observer: true,
+		winOrder: order,
+	});
+}
+
+export function nextUser(users, me, clockwise, skipped, complete) {
+	let usersInPlay = users.filter((user) => user.observer !== true);
+	if (usersInPlay.length === 1 && complete) {
+		endGame(users.length + 1, usersInPlay[0]);
+	} else {
+		let allUsers = [...usersInPlay, me];
+		let nextUserFn = clockwise
+			? nextClockwiseUser
+			: nextCounterClockwiseUser;
+		let nextUser = nextUserFn(allUsers, me);
+		if (skipped) nextUser = nextUserFn(allUsers, nextUser);
+		firebase.firestore().collection("userList").doc(nextUser.id).update({
+			myTurn: true,
+		});
+	}
+}
+
+export function removeCardsFromDeck(cards, user, clear, complete, users) {
+	let usersLeft, winOrder;
+	if (complete) {
+		usersLeft = users.filter((user) => user.out !== true);
+		winOrder = users.length + 1 - usersLeft.length;
+	} else {
+		winOrder = user.winOrder;
+	}
 	cards.map((card, index) => {
 		let deckWithCardRemoved = user.deck.filter((a) => {
 			return a.class != card.class;
 		});
 		user.deck = deckWithCardRemoved;
 		if (index === cards.length - 1) {
-			firebase
+			return firebase
 				.firestore()
 				.collection("userList")
 				.doc(user.id)
 				.update({
 					deck: user.deck,
 					myTurn: clear ? true : false,
+					winOrder: winOrder,
+					observer: complete,
 				});
 		}
 	});

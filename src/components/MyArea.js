@@ -42,17 +42,29 @@ export default function MyArea(props) {
 		let skipped = false;
 		let reverse = selectedCards[0].number === 4;
 		let clear = selectedCards[0].number === 2;
+		let complete = props.me.deck.length === selectedCards.length;
 		if (props.game.activeDeck.length > 0 && !reverse) {
 			skipped = skippedCheck(props.game.activeDeck, selectedCards);
 		}
-		console.log("cleared: ", clear);
-		userApi.removeCardsFromDeck(selectedCards, props.me, clear);
+		userApi.removeCardsFromDeck(
+			selectedCards,
+			props.me,
+			clear,
+			complete,
+			props.users
+		);
 		gameApi.addCardsToGame(props.game, selectedCards, reverse).then(() => {
 			if (!clear) {
 				let clockwise = reverse
 					? !props.game.clockwise
 					: props.game.clockwise;
-				userApi.nextUser(props.users, props.me, clockwise, skipped);
+				userApi.nextUser(
+					props.users,
+					props.me,
+					clockwise,
+					skipped,
+					complete
+				);
 			}
 			setSelectedCards([]);
 		});
@@ -62,12 +74,8 @@ export default function MyArea(props) {
 		gameApi.clearGameField(props.game);
 	}
 
-	function resetGame() {
-		gameApi.resetGame();
-		let allUsers = [...props.users, props.me];
-		allUsers.map((user) => {
-			userApi.resetUser(user);
-		});
+	function pass() {
+		userApi.pass(props.users, props.me, props.game.clockwise);
 	}
 
 	setupDeck();
@@ -77,32 +85,40 @@ export default function MyArea(props) {
 			{!props.me.myTurn && (
 				<div className="absolute w-full h-full z-10 bg-white opacity-50"></div>
 			)}
-			<div className="flex flex-row p-5">
-				<h1 className="text-green-600 text-2xl font-bold">
-					{props.me.id}
-				</h1>
-				<button
-					onClick={go}
-					disabled={selectedCards.length === 0}
-					className=" ml-2 bg-orange-400 rounded shadow px-4 disabled:opacity-75"
-				>
-					Go
-				</button>
+			<div className="flex flex-row justify-between p-5">
+				<div class="flex">
+					<div>
+						<h1 className="text-green-600 text-2xl font-bold">
+							{props.me.id}
+						</h1>
+						<span>{props.me.myTurn ? "Your Turn!" : ""}</span>
+						<span>
+							{props.me.observer &&
+								"Position: " + props.me.winOrder}
+						</span>
+					</div>
+					<button
+						onClick={go}
+						disabled={selectedCards.length === 0}
+						className=" ml-2 bg-green-700 text-white text-xl rounded shadow px-8 disabled:opacity-75"
+					>
+						Go
+					</button>
+					<button
+						onClick={pass}
+						className=" ml-2 bg-orange-400 rounded shadow px-4 disabled:opacity-75"
+					>
+						Pass
+					</button>
+				</div>
 				<button
 					onClick={clear}
 					className=" ml-2 bg-red-400 rounded shadow px-4 disabled:opacity-75"
 				>
 					Clear
 				</button>
-				<button
-					onClick={resetGame}
-					className=" ml-2 bg-red-400 rounded shadow px-4 disabled:opacity-75"
-				>
-					Reset
-				</button>
-				<span>{props.me.myTurn ? "Your Turn!" : ""}</span>
 			</div>
-			<div className="mt-2 p-2">
+			<div className="mt-1 py-2 px-10 my-deck">
 				{props.me.deck.map((card) => (
 					<Card onClick={onClick} key={card.index} card={card} />
 				))}

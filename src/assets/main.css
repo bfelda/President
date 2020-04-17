@@ -599,16 +599,12 @@ html {
   display: inline-block;
 }
 
-.turn > .card:nth-child(2) {
+.turn > .card:not(:first-child) {
   margin-left: -50px;
 }
 
-.turn > .card:nth-child(3) {
-  margin-left: -50px;
-}
-
-.turn > .card:nth-child(4) {
-  margin-left: -50px;
+.my-deck > .card:not(:first-child) {
+  margin-left: -30px;
 }
 
 .ace_clubs {
