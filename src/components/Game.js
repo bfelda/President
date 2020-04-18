@@ -27,7 +27,11 @@ export default function Game(props) {
 						}`}
 						key={user.id}
 					>
-						{user.id}: {user.winOrder}
+						{user.id}{" "}
+						{!user.observer && user.winOrder === 1 && "👑"}
+						{!user.observer &&
+							user.winOrder === props.users.length &&
+							"💩"}
 					</div>
 				))}
 			</div>
@@ -38,7 +42,7 @@ export default function Game(props) {
 					props.game.running && (
 						<button
 							onClick={resetGame}
-							className=" ml-2 bg-red-400 text-white text-xl rounded shadow px-8 py-4 disabled:opacity-75"
+							className=" ml-2 bg-red-400 text-white text-xl rounded shadow-md px-8 py-4 absolute z-10"
 						>
 							Reset
 						</button>

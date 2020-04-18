@@ -84,7 +84,9 @@ function App() {
 					setUsers(storeUsers.filter((u) => u.id !== username));
 					setMe(storeUsers.filter((u) => u.id === username)[0]);
 				} else {
-					setUsers(storeUsers);
+					setUsers(
+						storeUsers.sort((a, b) => a.winOrder - b.winOrder)
+					);
 				}
 			});
 		return () => unsubscribe();

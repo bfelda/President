@@ -34,7 +34,8 @@ export function startGame(users) {
 							.doc(userWithCards.id)
 							.update({
 								deck: userWithCards.deck,
-								myTurn: index === 0 ? true : false,
+								myTurn:
+									userWithCards.winOrder === 1 ? true : false,
 								winOrder: userWithCards.winOrder,
 								observer: false,
 							});

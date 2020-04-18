@@ -11,9 +11,7 @@ export default function Lobby(props) {
 	}
 
 	function removeUser(id) {
-		userApi.removeUser(id).then((response) => {
-			console.log(response);
-		});
+		userApi.removeUser(id);
 	}
 
 	return (
@@ -41,8 +39,8 @@ export default function Lobby(props) {
 							Leave
 						</div>
 					</div>
-					{props.users.map((user) => (
-						<div className="flex">
+					{props.users.map((user, index) => (
+						<div key={index} className="flex">
 							<div
 								className="bg-white my-2 p-3 shadow flex-grow"
 								key={user.id}

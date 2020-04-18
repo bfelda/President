@@ -16,10 +16,12 @@ export default function Menu(props) {
 		allUsers.map((user) => {
 			userApi.resetUser(user);
 		});
+		setVisible(false);
 	}
 
 	function clearMsg() {
 		chatApi.deleteAllChats(props.messages);
+		setVisible(false);
 	}
 
 	return (

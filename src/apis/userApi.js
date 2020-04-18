@@ -68,10 +68,12 @@ export function nextUser(users, me, clockwise, skipped, complete) {
 }
 
 export function removeCardsFromDeck(cards, user, clear, complete, users) {
-	let usersLeft, winOrder;
+	let usersLeft, winOrder, winner;
 	if (complete) {
-		usersLeft = users.filter((user) => user.out !== true);
+		debugger;
+		usersLeft = users.filter((user) => user.observer === false);
 		winOrder = users.length + 1 - usersLeft.length;
+		winner = winOrder === 1;
 	} else {
 		winOrder = user.winOrder;
 	}
@@ -90,6 +92,7 @@ export function removeCardsFromDeck(cards, user, clear, complete, users) {
 					myTurn: clear ? true : false,
 					winOrder: winOrder,
 					observer: complete,
+					wins: winner ? (user.wins += 1) : user.wins,
 				});
 		}
 	});
@@ -118,13 +121,15 @@ export function createUser(id) {
 
 export function removeUser(me, users) {
 	let myWinOrder = me.winOrder;
-	users.map((user) => {
-		if (user.winOrder > myWinOrder) {
-			user.winOrder -= 1;
-			firebase.firestore().collection(repo).doc(user.id).update({
-				winOrder: user.winOrder,
-			});
-		}
-	});
-	return firebase.firestore().collection(repo).doc(me.id).delete();
+	if (myWinOrder > 0) {
+		users.map((user) => {
+			if (user.winOrder > myWinOrder) {
+				user.winOrder -= 1;
+				firebase.firestore().collection(repo).doc(user.id).update({
+					winOrder: user.winOrder,
+				});
+			}
+		});
+		firebase.firestore().collection(repo).doc(me.id).delete();
+	}
 }
