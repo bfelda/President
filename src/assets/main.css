@@ -603,8 +603,9 @@ html {
   margin-left: -50px;
 }
 
-.my-deck > .card:not(:first-child) {
+.my-deck > .card {
   margin-left: -30px;
+  margin-top: -30px;
 }
 
 .menu-icon {
@@ -612,6 +613,11 @@ html {
   display: inline-block;
   width: 40px;
   text-indent: -999px;
+}
+
+#chat {
+  height: calc(100% - 60px);
+  top: 60px;
 }
 
 .border-icon {

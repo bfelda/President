@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as gameApi from "../apis/gameApi";
 import * as userApi from "../apis/userApi";
+import * as chatApi from "../apis/chatApi";
 
 export default function Menu(props) {
 	const [visible, setVisible] = useState(false);
@@ -17,8 +18,12 @@ export default function Menu(props) {
 		});
 	}
 
+	function clearMsg() {
+		chatApi.deleteAllChats(props.messages);
+	}
+
 	return (
-		<div className="absolute top-0 right-0 m-3">
+		<div className="absolute z-10 top-0 right-0 m-3">
 			<a
 				onClick={toggleMenu}
 				href="#"
@@ -31,6 +36,11 @@ export default function Menu(props) {
 				} absolute right-0 bg-white w-32 p-4 rounded-md shadow border-4 border-green-500`}
 			>
 				<ul>
+					<li className="mb-3">
+						<a href="#" onClick={clearMsg} id="clrMsg">
+							Clear Msg
+						</a>
+					</li>
 					<li className="border-b-2 border-gray-400">
 						<a href="#" onClick={resetGame} id="reset">
 							Reset

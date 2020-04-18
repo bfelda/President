@@ -35,7 +35,7 @@ export default function Lobby(props) {
 							{props.me.id}
 						</div>
 						<div
-							onClick={() => removeUser(props.me.id)}
+							onClick={() => removeUser(props.me, props.users)}
 							className="bg-red-500 my-2 p-3 shadow text-white cursor-pointer"
 						>
 							Leave

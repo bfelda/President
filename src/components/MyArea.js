@@ -118,7 +118,7 @@ export default function MyArea(props) {
 					Clear
 				</button>
 			</div>
-			<div className="mt-1 py-2 px-10 my-deck">
+			<div className="mt-5 py-2 px-10 my-deck">
 				{props.me.deck.map((card) => (
 					<Card onClick={onClick} key={card.index} card={card} />
 				))}

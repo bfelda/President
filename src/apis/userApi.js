@@ -116,6 +116,15 @@ export function createUser(id) {
 		});
 }
 
-export function removeUser(id) {
-	return firebase.firestore().collection(repo).doc(id).delete();
+export function removeUser(me, users) {
+	let myWinOrder = me.winOrder;
+	users.map((user) => {
+		if (user.winOrder > myWinOrder) {
+			user.winOrder -= 1;
+			firebase.firestore().collection(repo).doc(user.id).update({
+				winOrder: user.winOrder,
+			});
+		}
+	});
+	return firebase.firestore().collection(repo).doc(me.id).delete();
 }

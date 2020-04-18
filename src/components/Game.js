@@ -1,10 +1,9 @@
 import React, { useState } from "react";
+import Chat from "../components/Chat";
 import * as gameApi from "../apis/gameApi";
 import * as userApi from "../apis/userApi";
 
 export default function Game(props) {
-	const [running, setRunning] = useState(false);
-
 	function resetGame() {
 		gameApi.resetGame();
 		let allUsers = [...props.users, props.me];
@@ -14,7 +13,8 @@ export default function Game(props) {
 	}
 
 	return (
-		<div className="flex-grow">
+		<div className="flex-grow relative">
+			<Chat messages={props.messages} me={props.me} />
 			<div className="flex flex-row justify-around">
 				{props.users.map((user) => (
 					<div

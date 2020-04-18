@@ -38,6 +38,23 @@ function App() {
 		deck: [],
 	});
 
+	const [messages, setMessages] = useState([]);
+
+	//Messages
+	useEffect(() => {
+		const unsubscribe = firebase
+			.firestore()
+			.collection("chatList")
+			.onSnapshot((snapshot) => {
+				const passedMsg = snapshot.docs.map((doc) => ({
+					id: doc.id,
+					...doc.data(),
+				}));
+				setMessages(passedMsg);
+			});
+		return () => unsubscribe();
+	}, []);
+
 	//All about game data
 	useEffect(() => {
 		const unsubscribe = firebase
@@ -78,8 +95,18 @@ function App() {
 			{me.id ? (
 				game.running ? (
 					<div className="flex flex-col justify-between h-screen">
-						<Menu users={users} game={game} me={me} />
-						<Game game={game} users={users} me={me} />
+						<Menu
+							users={users}
+							game={game}
+							me={me}
+							messages={messages}
+						/>
+						<Game
+							messages={messages}
+							game={game}
+							users={users}
+							me={me}
+						/>
 						<MyArea me={me} users={users} game={game} />
 					</div>
 				) : (
