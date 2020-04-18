@@ -10,8 +10,8 @@ export default function Lobby(props) {
 		gameApi.startGame([...props.users, props.me]);
 	}
 
-	function removeUser(id) {
-		userApi.removeUser(id);
+	function removeUser() {
+		userApi.removeUser(props.me, props.users);
 	}
 
 	return (
@@ -33,7 +33,7 @@ export default function Lobby(props) {
 							{props.me.id}
 						</div>
 						<div
-							onClick={() => removeUser(props.me, props.users)}
+							onClick={removeUser}
 							className="bg-red-500 my-2 p-3 shadow text-white cursor-pointer"
 						>
 							Leave

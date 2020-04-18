@@ -81,10 +81,6 @@ export default function MyArea(props) {
 		}
 	}
 
-	function sortDeck(deck) {
-		return deck.sort((a, b) => a.number - b.number);
-	}
-
 	function skippedCheck(deck, thrown) {
 		let topNumbersOfDeck = deck[deck.length - 1].cards.map((c) => c.number);
 
