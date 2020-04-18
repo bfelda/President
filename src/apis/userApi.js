@@ -130,6 +130,6 @@ export function removeUser(me, users) {
 				});
 			}
 		});
-		firebase.firestore().collection(repo).doc(me.id).delete();
 	}
+	firebase.firestore().collection(repo).doc(me.id).delete();
 }
