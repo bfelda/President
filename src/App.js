@@ -9,6 +9,8 @@ import "./App.css";
 
 function App() {
 	//get username from storage
+	//wrap in a useeffect
+	// add console log to see how this is getting hit
 	const username = localStorage.getItem("username");
 	if (username) {
 		//if the usename exists, get the firebase doc
@@ -56,6 +58,7 @@ function App() {
 	}, []);
 
 	//All about game data
+	// try a custom hook for all calls but messages
 	useEffect(() => {
 		const unsubscribe = firebase
 			.firestore()
@@ -97,12 +100,7 @@ function App() {
 			{me.id ? (
 				game.running ? (
 					<div className="flex flex-col justify-between h-screen">
-						<Menu
-							users={users}
-							game={game}
-							me={me}
-							messages={messages}
-						/>
+						<Menu users={users} game={game} me={me} />
 						<Game
 							messages={messages}
 							game={game}

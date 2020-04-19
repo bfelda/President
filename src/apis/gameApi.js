@@ -1,5 +1,6 @@
 import firebase from "../services/firebase";
 import * as deckApi from "../services/deckService";
+import * as chatApi from "./chatApi";
 
 const gameId = "jfZbXjCYykHsLuZxgjZ3";
 
@@ -52,6 +53,7 @@ export function resetGame() {
 		running: false,
 		clockwise: true,
 	});
+	chatApi.deleteAllChats();
 }
 
 export function clearGameField(game) {

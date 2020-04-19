@@ -1,4 +1,5 @@
 import firebase from "../services/firebase";
+import * as chatApi from "./chatApi";
 
 const repo = "userList";
 
@@ -48,6 +49,7 @@ export function endGame(order, lastUser) {
 		observer: true,
 		winOrder: order,
 	});
+	chatApi.deleteAllChats();
 }
 
 export function nextUser(users, me, clockwise, skipped, complete) {

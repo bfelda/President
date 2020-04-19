@@ -20,7 +20,7 @@ export default function Menu(props) {
 	}
 
 	function clearMsg() {
-		chatApi.deleteAllChats(props.messages);
+		chatApi.deleteAllChats();
 		setVisible(false);
 	}
 

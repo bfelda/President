@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Chat from "../components/Chat";
+import Turn from "./Turn";
 import * as gameApi from "../apis/gameApi";
 import * as userApi from "../apis/userApi";
 
@@ -64,13 +65,7 @@ export default function Game(props) {
 							}}
 							className="p-2 turn absolute"
 						>
-							{turn.cards &&
-								turn.cards.map((card) => (
-									<div
-										key={card.index}
-										className={`card ${card.class}`}
-									></div>
-								))}
+							<Turn cards={turn.cards} />
 						</div>
 					))}
 				</div>

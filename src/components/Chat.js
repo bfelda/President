@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import firebase from "../services/firebase";
+import * as chatApi from "../apis/chatApi";
 
 export default function Chat(props) {
 	const [message, setMessage] = useState("");
@@ -10,19 +10,14 @@ export default function Chat(props) {
 			user: props.me.id,
 			message: message,
 		};
-		firebase
-			.firestore()
-			.collection("chatList")
-			.doc(JSON.stringify(Date.now()))
-			.set(msg);
+		chatApi.addChat(msg);
 		setMessage("");
-		document.querySelector("#new_message").value = "";
 	}
 
 	function handleChange({ target }) {
 		setMessage(target.value);
 	}
-
+	//controlled vs uncontrolled component
 	return (
 		<div
 			id="chat"
@@ -43,6 +38,7 @@ export default function Chat(props) {
 						className="w-full"
 						name="new_message"
 						id="new_message"
+						value={message}
 						onChange={handleChange}
 					></input>
 					<button

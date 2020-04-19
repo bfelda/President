@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Card";
+import ClearButton from "./ClearBtn";
 import * as gameApi from "../apis/gameApi";
+import * as chatApi from "../apis/chatApi";
 import * as userApi from "../apis/userApi";
 
 export default function MyArea(props) {
 	const [selectedCards, setSelectedCards] = useState([]);
 	const [deck, setDeck] = useState([]);
 
+	//extract with tests, test just the function cause it's complex as hell
 	useEffect(() => {
 		let twos = props.me.deck.filter((card) => card.number === 2);
 		let fours = props.me.deck.filter((card) => card.number === 4);
@@ -86,10 +89,13 @@ export default function MyArea(props) {
 
 		let currentNumbersThrown = thrown.map((c) => c.number);
 
-		return (
+		let skipped =
 			JSON.stringify(currentNumbersThrown) ==
-			JSON.stringify(topNumbersOfDeck)
-		);
+			JSON.stringify(topNumbersOfDeck);
+
+		if (skipped) chatApi.addBotChat("You got Skipped 🦉");
+
+		return skipped;
 	}
 
 	function go() {
@@ -124,12 +130,9 @@ export default function MyArea(props) {
 		});
 	}
 
-	function clear() {
-		gameApi.clearGameField(props.game);
-	}
-
 	function pass() {
 		userApi.pass(props.users, props.me, props.game.clockwise);
+		chatApi.addBotChat(`${props.me.id} Passed 🏈`);
 	}
 
 	return (
@@ -164,17 +167,7 @@ export default function MyArea(props) {
 					</button>
 				</div>
 				<div>
-					{props.game.activeDeck.length > 0 &&
-						props.game.activeDeck[props.game.activeDeck.length - 1]
-							.cards[0].number === 2 &&
-						props.me.myTurn && (
-							<button
-								onClick={clear}
-								className=" ml-2 bg-red-400 text-white rounded shadow px-4 disabled:opacity-75 h-full"
-							>
-								Clear
-							</button>
-						)}
+					<ClearButton game={props.game} me={props.me} />
 				</div>
 			</div>
 			<div className="mt-5 py-2 px-10 my-deck">
