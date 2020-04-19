@@ -31,7 +31,7 @@ export default function Game(props) {
 						{user.id}{" "}
 						{!user.observer && user.winOrder === 1 && "👑"}
 						{!user.observer &&
-							user.winOrder === props.users.length &&
+							user.winOrder === props.users.length + 1 &&
 							"💩"}
 					</div>
 				))}

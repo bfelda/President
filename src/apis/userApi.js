@@ -43,7 +43,6 @@ export function pass(users, me, clockwise) {
 }
 
 export function endGame(order, lastUser) {
-	debugger;
 	firebase.firestore().collection(repo).doc(lastUser.id).update({
 		myTurn: false,
 		observer: true,
@@ -72,7 +71,6 @@ export function nextUser(users, me, clockwise, skipped, complete) {
 export function removeCardsFromDeck(cards, user, clear, complete, users) {
 	let usersLeft, winOrder, winner;
 	if (complete) {
-		debugger;
 		usersLeft = users.filter((user) => user.observer === false);
 		winOrder = users.length + 1 - usersLeft.length;
 		winner = winOrder === 1;

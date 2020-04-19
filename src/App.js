@@ -78,6 +78,7 @@ function App() {
 		const unsubscribe = firebase
 			.firestore()
 			.collection("userList")
+			.orderBy("winOrder")
 			.onSnapshot((snapshot) => {
 				const storeUsers = snapshot.docs.map((doc) => ({
 					id: doc.id,

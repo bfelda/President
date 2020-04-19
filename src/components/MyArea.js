@@ -105,7 +105,7 @@ export default function MyArea(props) {
 			selectedCards[1].number === 6 &&
 			selectedCards[2].number === 6
 		) {
-			chatApi.addBotChat("😈🤘😈🤘😈🤘😈🤘");
+			chatApi.addBotChat("😈 Hail Satan🤘 😈");
 		}
 	}
 
@@ -153,6 +153,11 @@ export default function MyArea(props) {
 
 	return (
 		<div className="w-full bg-orange-200 relative">
+			{/* <div id="bullpen">
+				{selectedCards.map((card) => (
+					<Card onClick={onClick} key={card.index} card={card} />
+				))}
+			</div> */}
 			{!props.me.myTurn && (
 				<div className="absolute w-full h-full z-10 bg-white opacity-50"></div>
 			)}
