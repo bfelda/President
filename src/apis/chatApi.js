@@ -12,7 +12,6 @@ export function deleteAllChats() {
 		.collection(repo)
 		.get()
 		.then((querySnapshot) => {
-			debugger;
 			querySnapshot.forEach((doc) => {
 				deleteItem(doc);
 			});

@@ -98,11 +98,25 @@ export default function MyArea(props) {
 		return skipped;
 	}
 
+	function satanCheck(cards) {
+		if (
+			selectedCards.length === 3 &&
+			selectedCards[0].number === 6 &&
+			selectedCards[1].number === 6 &&
+			selectedCards[2].number === 6
+		) {
+			chatApi.addBotChat("😈🤘😈🤘😈🤘😈🤘");
+		}
+	}
+
 	function go() {
 		let skipped = false;
+		satanCheck(selectedCards);
 		let reverse = selectedCards[0].number === 4;
+		if (reverse) chatApi.addBotChat("Reverse it! 🚇");
 		let clear = selectedCards[0].number === 2;
 		let complete = props.me.deck.length === selectedCards.length;
+		if (complete) chatApi.addBotChat("Peace! ✌️✌️");
 		if (props.game.activeDeck.length > 0 && !reverse) {
 			skipped = skippedCheck(props.game.activeDeck, selectedCards);
 		}
@@ -113,21 +127,23 @@ export default function MyArea(props) {
 			complete,
 			props.users
 		);
-		gameApi.addCardsToGame(props.game, selectedCards, reverse).then(() => {
-			if (!clear) {
-				let clockwise = reverse
-					? !props.game.clockwise
-					: props.game.clockwise;
-				userApi.nextUser(
-					props.users,
-					props.me,
-					clockwise,
-					skipped,
-					complete
-				);
-			}
-			setSelectedCards([]);
-		});
+		gameApi
+			.addCardsToGame(props.game, selectedCards, reverse, props.me.id)
+			.then(() => {
+				if (!clear) {
+					let clockwise = reverse
+						? !props.game.clockwise
+						: props.game.clockwise;
+					userApi.nextUser(
+						props.users,
+						props.me,
+						clockwise,
+						skipped,
+						complete
+					);
+				}
+				setSelectedCards([]);
+			});
 	}
 
 	function pass() {

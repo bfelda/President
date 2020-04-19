@@ -63,9 +63,10 @@ export function clearGameField(game) {
 	});
 }
 
-export function addCardsToGame(game, newCards, reverse) {
+export function addCardsToGame(game, newCards, reverse, myId) {
 	let turn = {
 		cards: newCards,
+		userId: myId,
 	};
 	return firebase
 		.firestore()
