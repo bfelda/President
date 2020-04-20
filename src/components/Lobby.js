@@ -14,6 +14,14 @@ export default function Lobby(props) {
 		userApi.removeUser(props.me, props.users);
 	}
 
+	function getPosition(user, numberOfUsers) {
+		return user.winOrder === 1
+			? "👑"
+			: user.winOrder === numberOfUsers + 1
+			? "💩"
+			: "";
+	}
+
 	return (
 		<div className="h-screen w-screen flex justify-center items-center absolute">
 			<form
@@ -30,6 +38,9 @@ export default function Lobby(props) {
 				<div className="lobby-list">
 					<div className="flex">
 						<div className="bg-white my-2 p-3 shadow flex-grow">
+							<span className="mr-2">
+								{getPosition(props.me, props.users.length)}
+							</span>
 							{props.me.id}
 						</div>
 						<div
@@ -45,6 +56,9 @@ export default function Lobby(props) {
 								className="bg-white my-2 p-3 shadow flex-grow"
 								key={user.id}
 							>
+								<span className="mr-2">
+									{getPosition(user, props.users.length)}
+								</span>
 								{user.id}
 							</div>
 						</div>
