@@ -10,6 +10,13 @@ export default function Menu(props) {
 		setVisible(!visible);
 	}
 
+	function clear() {
+		function clear() {
+			gameApi.clearGameField(props.game);
+			chatApi.addBotChat(`Wipe it 🧻🧻`);
+		}
+	}
+
 	function resetGame() {
 		gameApi.resetGame();
 		let allUsers = [...props.users, props.me];
@@ -46,6 +53,11 @@ export default function Menu(props) {
 					<li className="border-b-2 border-gray-400">
 						<a href="#" onClick={resetGame} id="reset">
 							Reset
+						</a>
+					</li>
+					<li className="border-b-2 border-gray-400">
+						<a href="#" onClick={clear} id="reset">
+							Clear
 						</a>
 					</li>
 				</ul>

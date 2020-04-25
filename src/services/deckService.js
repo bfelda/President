@@ -138,7 +138,15 @@ export function lastTurn(deck) {
 	return deck[deck.length - 1].cards.map((c) => c.number);
 }
 
-export function validTurn(deck, selectedCards) {
+export function validTurn(deck, selectedCards, deckLength) {
+	//start out checking for twos, can't end on a two
+	let twos = selectedCards.filter((card) => card.number === 2);
+	if (twos.length === deckLength) {
+		//can't end on twos
+		chatApi.addBotChat(`Can't end on a two, screwed 💩`);
+		return false;
+	}
+	//if the deck is empty, any card can be thrown
 	if (deck.length === 0) return true;
 	let topTurn = lastTurn(deck); //[3,3]
 	//if one card is thrown
@@ -166,9 +174,13 @@ export function validTurn(deck, selectedCards) {
 		if (card1.number !== card2.number) {
 			chatApi.addBotChat(`Gotta match 💩`);
 			return false;
-		} else if (card1.number === 2 || card1.number === 4) {
-			//can throw pair of 2s or 4s on anything
+		} else if (card1.number === 2) {
+			//can throw pair of 2s on anything
 			return true;
+		} else if (card1.number === 4) {
+			//can't throw multiple fours at one time
+			chatApi.addBotChat(`4's go one ata time 💩`);
+			return false;
 		} else if (topTurn.length > 2) {
 			// can't throw two on 3
 			chatApi.addBotChat(`Two few cards 💩`);
@@ -191,9 +203,13 @@ export function validTurn(deck, selectedCards) {
 		if (card1.number !== card2.number || card2.number !== card3.number) {
 			chatApi.addBotChat(`Gotta match 💩`);
 			return false;
-		} else if (card1.number === 2 || card1.number === 4) {
-			//twos and fours are good for anything
+		} else if (card1.number === 2) {
+			//twos are good for anything
 			return true;
+		} else if (card1.number === 4) {
+			//can't throw more than one 4
+			chatApi.addBotChat(`4's go one ata time 💩`);
+			return false;
 		} else if (topTurn.length > 3) {
 			chatApi.addBotChat(`too few cards 💩`);
 			// can't throw 3 cards on a 4 card turn
@@ -219,9 +235,13 @@ export function validTurn(deck, selectedCards) {
 		) {
 			chatApi.addBotChat(`Gotta match 💩`);
 			return false;
-		} else if (card1.number === 2 || card1.number === 4) {
-			//twos and fours are good for anything
+		} else if (card1.number === 2) {
+			//twos are good for anything
 			return true;
+		} else if (card1.number === 4) {
+			//can't throw more than one 4
+			chatApi.addBotChat(`4's go one ata time 💩`);
+			return false;
 		} else if (topTurn.length < 4) {
 			return true;
 		} else if (selectedCards[0].number < topTurn[0]) {

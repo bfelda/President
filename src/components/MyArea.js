@@ -54,7 +54,13 @@ export default function MyArea(props) {
 	}
 
 	function go() {
-		if (deckService.validTurn(props.game.activeDeck, selectedCards)) {
+		if (
+			deckService.validTurn(
+				props.game.activeDeck,
+				selectedCards,
+				deck.length
+			)
+		) {
 			let skipped = false;
 			satanCheck(selectedCards);
 			let reverse = selectedCards[0].number === 4;
@@ -98,7 +104,7 @@ export default function MyArea(props) {
 	}
 
 	return (
-		<div className="w-full bg-orange-200 relative">
+		<div className="w-full bg-orange-200 relative mb-10">
 			{/* <div id="bullpen" className="absolute top-0 right-0">
 				{selectedCards.map((card) => (
 					<Card onClick={onClick} key={card.index} card={card} />

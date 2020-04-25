@@ -24,7 +24,7 @@ export default function Chat(props) {
 			className="absolute right-0 w-full flex flex-col justify-end overflow-hidden"
 		>
 			<div className="flex-grow flex items-end w-56">
-				<ul id="chat-messages" className="flex flex-col opacity-50">
+				<ul id="chat-messages" className="flex flex-col opacity-75">
 					{props.messages.map((message, index) => (
 						<li className="text-white" key={index}>
 							{message.user}: {message.message}

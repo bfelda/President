@@ -1,7 +1,7 @@
 import React from "react";
 import * as gameApi from "../apis/gameApi";
 import * as chatApi from "../apis/chatApi";
-
+//Clear button needs to block everything so you cannot throw something on a two accidentally
 export default function ClearBtn(props) {
 	function clear() {
 		gameApi.clearGameField(props.game);
