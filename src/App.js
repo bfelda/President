@@ -5,6 +5,7 @@ import Lobby from "./components/Lobby";
 import Game from "./components/Game";
 import MyArea from "./components/MyArea";
 import Menu from "./components/Menu";
+import ObservationDeck from "./components/ObservationDeck";
 import "./App.css";
 
 function App() {
@@ -114,12 +115,11 @@ function App() {
 					<Lobby users={users} me={me} game={game} />
 				)
 			) : game.running ? (
-				<div className="flex h-screen items-center justify-center text-3xl text-white">
-					<div className="mx-20 text-center">
-						There's a game in play, when it's done you'll be able to
-						join
-					</div>
-				</div>
+				<ObservationDeck
+					game={game}
+					users={users}
+					messages={messages}
+				/>
 			) : (
 				<UserDetails />
 			)}

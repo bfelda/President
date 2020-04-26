@@ -27,7 +27,8 @@ export default function Chat(props) {
 				<ul id="chat-messages" className="flex flex-col opacity-75">
 					{props.messages.map((message, index) => (
 						<li className="text-white" key={index}>
-							{message.user}: {message.message}
+							<span className="font-thin">{message.user}</span>:{" "}
+							{message.message}
 						</li>
 					))}
 				</ul>
