@@ -23,9 +23,15 @@ export default function Lobby(props) {
 	}
 
 	return (
-		<div className="h-screen w-screen flex justify-center items-center absolute">
+		<div className="h-screen w-screen flex justify-center items-center absolute flex flex-col">
+			<div className="text-white text-2xl md:w-3/4 text-center">
+				{props.users.length === 0 &&
+					"your the only one here, call some friends!"}
+				{props.users.length === 1 &&
+					"Only one more person and we got a game!"}
+			</div>
 			<form
-				className="text-center w-full md:w-3/4 relative rounded px-20 py-10 shadow-lg bg-cards max-w-6xl"
+				className="mt-10 text-center w-full md:w-3/4 relative rounded px-20 py-10 shadow-lg bg-cards max-w-6xl"
 				onSubmit={handleSubmit}
 				action=""
 				id="user-form"
