@@ -43,6 +43,12 @@ function App() {
 
 	const [messages, setMessages] = useState([]);
 
+	function handleAddToHomescreenClick() {
+		alert(`
+			1. Open Share menu
+			2. Tap on "Add to Home Screen" button`);
+	}
+
 	//Messages
 	useEffect(() => {
 		const unsubscribe = firebase
