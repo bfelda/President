@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import * as userApi from "../apis/userApi";
-import * as gameApi from "../apis/gameApi";
 
 function UserDetails(props) {
 	const green = "green-600";
@@ -23,7 +22,6 @@ function UserDetails(props) {
 			<form
 				className="text-center w-full md:w-3/4 relative rounded px-20 py-10 shadow-lg bg-cards max-w-6xl"
 				onSubmit={handleSubmit}
-				action=""
 				id="user-form"
 			>
 				<div className="shadow-md">

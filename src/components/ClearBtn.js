@@ -22,12 +22,14 @@ export default function ClearBtn(props) {
 	return (
 		<>
 			{showClearBtn() && (
-				<button
-					onClick={clear}
-					className=" ml-2 bg-red-400 text-white rounded shadow px-4 disabled:opacity-75 h-full"
-				>
-					Clear
-				</button>
+				<div className="absolute bg-green-300 w-full h-full top-0 flex justify-center items-center">
+					<button
+						onClick={clear}
+						className=" ml-2 bg-green-700 text-white rounded shadow px-20 py-8 text-2xl"
+					>
+						Clear
+					</button>
+				</div>
 			)}
 		</>
 	);

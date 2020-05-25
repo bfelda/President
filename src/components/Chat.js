@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
 import * as chatApi from "../apis/chatApi";
+import * as gameApi from "../apis/gameApi";
 
 export default function Chat(props) {
 	const [message, setMessage] = useState("");
+	const resetGameBackdoorMessage = "ResetGameBackd00r";
 
 	function postMessage(event) {
-		event.preventDefault();
-		let msg = {
-			user: props.me.id,
-			message: message,
-		};
-		chatApi.addChat(msg);
-		setMessage("");
+		if (message === resetGameBackdoorMessage) {
+			gameApi.resetGame();
+		} else {
+			event.preventDefault();
+			let msg = {
+				user: props.me.id,
+				message: message,
+			};
+			chatApi.addChat(msg);
+			setMessage("");
+		}
 	}
 
 	function handleChange({ target }) {

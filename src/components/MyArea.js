@@ -105,11 +105,6 @@ export default function MyArea(props) {
 
 	return (
 		<div className="w-full bg-orange-200 relative mb-10">
-			{/* <div id="bullpen" className="absolute top-0 right-0">
-				{selectedCards.map((card) => (
-					<Card onClick={onClick} key={card.index} card={card} />
-				))}
-			</div> */}
 			{!props.me.myTurn && (
 				<div className="absolute w-full h-full z-10 bg-white opacity-50"></div>
 			)}
@@ -139,10 +134,8 @@ export default function MyArea(props) {
 						Pass
 					</button>
 				</div>
-				<div>
-					<ClearButton game={props.game} me={props.me} />
-				</div>
 			</div>
+			<ClearButton game={props.game} me={props.me} />
 			<div className="mt-5 py-2 px-10 my-deck">
 				{deck.map((card) => (
 					<Card onClick={onClick} key={card.index} card={card} />

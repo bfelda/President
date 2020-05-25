@@ -1,18 +1,10 @@
 import React, { useState } from "react";
-import Chat from "../components/Chat";
+import Chat from "./Chat";
+import WinOrder from "./WinOrder";
+import EndGame from "./EndGame";
 import Turn from "./Turn";
-import * as gameApi from "../apis/gameApi";
-import * as userApi from "../apis/userApi";
 
 export default function Game(props) {
-	function resetGame() {
-		gameApi.resetGame();
-		let allUsers = [...props.users, props.me];
-		allUsers.map((user) => {
-			userApi.resetUser(user);
-		});
-	}
-
 	return (
 		<div className="flex-grow relative">
 			<Chat messages={props.messages} me={props.me} />
@@ -28,11 +20,8 @@ export default function Game(props) {
 						}`}
 						key={user.id}
 					>
-						{user.id}{" "}
-						{!user.observer && user.winOrder === 1 && "👑"}
-						{!user.observer &&
-							user.winOrder === props.users.length + 1 &&
-							"💩"}
+						<span>{user.id}</span>
+						<WinOrder me={user} users={props.users} />
 					</div>
 				))}
 			</div>
@@ -41,12 +30,11 @@ export default function Game(props) {
 				{props.users.filter((user) => user.observer).length ===
 					props.users.length &&
 					props.game.running && (
-						<button
-							onClick={resetGame}
-							className=" ml-2 bg-red-400 text-white text-xl rounded shadow-md px-8 py-4 absolute z-10"
-						>
-							Reset
-						</button>
+						<EndGame
+							users={props.users}
+							game={props.game}
+							me={props.me}
+						/>
 					)}
 				{/* Active Deck */}
 				<div
