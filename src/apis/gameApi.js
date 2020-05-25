@@ -2,7 +2,7 @@ import firebase from "../services/firebase";
 import * as deckApi from "../services/deckService";
 import * as chatApi from "./chatApi";
 
-const gameId = "jfZbXjCYykHsLuZxgjZ3";
+const gameId = "k7UfL4V0YJ1mFa9sZdxz";
 
 export function startGame(users) {
 	let newUsers = users
