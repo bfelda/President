@@ -11,10 +11,8 @@ export default function Menu(props) {
 	}
 
 	function clear() {
-		function clear() {
-			gameApi.clearGameField(props.game);
-			chatApi.addBotChat(`Wipe it 🧻🧻`);
-		}
+		gameApi.clearGameField(props.game);
+		chatApi.addBotChat(`Wipe it 🧻🧻`);
 	}
 
 	function resetGame() {
