@@ -10,7 +10,6 @@ export default function MyArea(props) {
 	const [selectedCards, setSelectedCards] = useState([]);
 	const [deck, setDeck] = useState([]);
 
-	//extract with tests, test just the function cause it's complex as hell
 	useEffect(() => {
 		setDeck(deckService.sortMyDeck(props.me.deck));
 	}, [props.me.deck]);

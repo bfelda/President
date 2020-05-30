@@ -15,8 +15,8 @@ export default function Card(props) {
 		<div
 			key={props.card.index}
 			onClick={onCardClicked}
-			className={`cursor-pointer card ${props.card.class} ${
-				selected ? "shadow-outline" : ""
+			className={`cursor-pointer rounded card ${props.card.class} ${
+				selected ? "pres-shadow-outline" : ""
 			}`}
 		></div>
 	);

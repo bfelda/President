@@ -608,6 +608,10 @@ html {
   margin-top: -30px;
 }
 
+.pres-shadow-outline {
+  box-shadow: 0 0 3px 4px rgba(66, 153, 225, 0.6);
+}
+
 .menu-icon {
   position: relative;
   display: inline-block;

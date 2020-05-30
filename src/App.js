@@ -6,7 +6,6 @@ import Game from "./components/Game";
 import MyArea from "./components/MyArea";
 import Menu from "./components/Menu";
 import ObservationDeck from "./components/ObservationDeck";
-import "./App.css";
 
 function App() {
 	//get username from storage
