@@ -16,7 +16,7 @@
 	},
 	"scripts": {
 		"start": "npm run watch:css && react-scripts start",
-		"build": "npm run build:css && react-scripts build && npm run build:lambda",
+		"build": "npm run build:css && react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
 		"build:lambda": "netlify-lambda build functions",
