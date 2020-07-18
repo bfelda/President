@@ -24,6 +24,10 @@ export default function Lobby(props) {
 
 	return (
 		<div className="h-screen w-screen flex justify-center items-center absolute flex flex-col">
+			<form name="contact" class="form" method="POST" data-netlify="true">
+				<h1>Wanna spread the word?</h1>
+				<button class="btn" type="submit">Send messages!</button>
+			</form>
 			<div className="text-white text-2xl md:w-3/4 text-center">
 				{props.users.length === 0 &&
 					"your the only one here, call some friends!"}
