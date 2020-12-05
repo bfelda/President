@@ -17,7 +17,7 @@ This app uses React and Tailwind.css
 
 * type `git clone https://github.com/bfelda/President.git` which is what you should have copied from above.
 ***This will copy the code into your computer and setup change tracking***
-
+* `cd` into the newly created folder, (should be called "President")
 * type `npm install` to have the node program install all of the dependencies.
 * type `npm start` to start the game.  After it starts it will display the url to access the game running locally.  Open a browser to see the game.  Open 3 browsers to play a game locally with 3 different users.
 
