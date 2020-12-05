@@ -24,9 +24,7 @@ export default function Lobby(props) {
 
 	return (
 		<div className="h-screen w-screen flex justify-center items-center absolute flex flex-col">
-			<form name="contact" class="form" method="POST" netlify>
-				<button class="btn transparent" type="submit">Don't press this button!</button>
-			</form>
+			<a class="hidden" href="/invite" id="invite-link">Invite Someone</a>
 			<div className="text-white text-2xl md:w-3/4 text-center">
 				{props.users.length === 0 &&
 					"your the only one here, call some friends!"}

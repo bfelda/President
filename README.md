@@ -1,5 +1,29 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+This app uses React and Tailwind.css
+
+**Download and install:**
+VS Code  (code editor)
+Node.js (runtime and dependency)
+git for windows (code source control and change tracking)
+restart pc
+
+**Getting connected to the code:**
+go to github.com, and create an account
+Go to the President game repo here: https://github.com/bfelda/President
+Click the "Code" button in the upper right and copy the url in the text box
+Open a command prompt and navigate to the folder you want to save your project to, something like C://users/drosio/documents/projects
+***To navigate to a folder, use the `dir` command to list the child folders, `cd folder-name` to navigate into it, `mkdir` to create a new folder***
+
+type `git clone https://github.com/bfelda/President.git` which is what you should have copied from above.
+***This will copy the code into your computer and setup change tracking***
+
+type `npm install` to have the node program install all of the dependencies.
+type `npm start` to start the game.  After it starts it will display the url to access the game running locally.  Open a browser to see the game.  Open 3 browsers to play a game locally with 3 different users.
+
+`Open VS Code`
+Open the project in VS Code either by starting another command prompt, navigating to the folder and typing `code .` or starting the VS Code program and clicking `file -> open folder` and navigating to the project folder.
+
 ## Available Scripts
 
 In the project directory, you can run:
